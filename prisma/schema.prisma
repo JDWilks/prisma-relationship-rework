@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  shadowDataBaseUrl = env("SHADOWDATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// model Doctor {
+// firstName String
+// lastName String
+// speciality String
+// id  Int @id @unique @default(autoincrement())
+// }
+
+// model Appointment {
+// practiceName String @unique
+// date Int
+// time Int
+// reason String
+// id Doctor
+// }
+
+model Book{
+  id  Int @id @default(autoincrement())
+  title String @db.VarChar(200)
+  type String
+  author String
+  topic String
+  publicationdate DateTime
+}
