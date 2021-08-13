@@ -4,7 +4,8 @@
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  shadowDataBaseUrl = env("SHADOWDATABASE_URL")
+  shadowDatabaseUrl = env("SHADOWDATABASE_URL")
+  
 }
 
 generator client {
@@ -32,5 +33,19 @@ model Book{
   type String
   author String
   topic String
-  publicationdate DateTime
+  publicationdate DateTime 
+}
+
+model User{
+  id  Int @id @default(autoincrement())
+  name String @db.VarChar(200)
+  age Int
+  orders Order[]
+}
+
+model Order{
+  orderid Int @id @default(autoincrement())
+  quantity Int
+  userid  Int
+  user User @relation(fields: [userid], references: [id])
 }
