@@ -1,10 +1,22 @@
 const { order } = require("../../utils/dbClient");
 const dbClient = require("../../utils/dbClient");
 
+// function createOneOrder(req, res) {
+//   const newOrder = req.body;
+//   dbClient.order
+//     .create({ data: newOrder })
+//     .then((newOrder) => {
+//       res.json({ newOrder });
+//     })
+//     .catch((error) => {
+//       res.json({ msg: "...you fucked up didn't ya son" });
+//     });
+// }
+
 function createOneOrder(req, res) {
   const newOrder = req.body;
-  dbClient.orders
-    .create({ data: newOrder })
+  dbClient.order
+    .create({ data: { ...newOrder, products: { create: {} } } })
     .then((newOrder) => {
       res.json({ newOrder });
     })
@@ -14,13 +26,13 @@ function createOneOrder(req, res) {
 }
 
 function findAllOrders(req, res) {
-  dbClient.orders.findMany().then((allOrders) => res.json({ allOrders }));
+  dbClient.order.findMany().then((allOrders) => res.json({ allOrders }));
 }
 
 function updateOrder(req, res) {
   const updatedOrder = req.body;
   const id = parseInt(req.params.id);
-  dbClient.orders
+  dbClient.order
     .update({
       where: { id: id },
       data: updatedOrder,
@@ -32,7 +44,7 @@ function updateOrder(req, res) {
 
 function deleteOrder(req, res) {
   const id = parseInt(req.params.id);
-  dbClient.orders
+  dbClient.order
     .delete({
       where: { id: id },
     })

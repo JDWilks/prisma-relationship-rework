@@ -1,18 +1,26 @@
 const usersRouter = require("express").Router();
 
+const { user } = require("../../utils/dbClient");
+const dbClient = require("../../utils/dbClient");
+
 const {
   createOneUser,
   findAllUsers,
   updateUser,
   deleteUser,
+  userOrdersList,
 } = require("./controller");
 
-ordersRouter.post("/", createOneUser);
+usersRouter.post("/", createOneUser);
 
-ordersRouter.get("/", findAllUsers);
+usersRouter.get("/", findAllUsers);
 
-ordersRouter.patch("/:id", updateUser);
+usersRouter.patch("/:id", updateUser);
 
-ordersRouter.delete("/:id", deleteUser);
+usersRouter.delete("/:id", deleteUser);
+
+// >>> trying new shizzle rouotes >>>
+
+usersRouter.get("/user-orders", userOrdersList);
 
 module.exports = usersRouter;

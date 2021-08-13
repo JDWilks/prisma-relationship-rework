@@ -7,7 +7,7 @@ const app = express();
 const booksRouter = require("./resources/book/router");
 const ordersRouter = require("./resources/order/router");
 const usersRouter = require("./resources/user/router");
-
+const productsRouter = require("./resources/product/router");
 // middleware
 
 app.use(morgan("dev"));
@@ -19,6 +19,7 @@ app.use(express.json());
 app.use("/books", booksRouter);
 app.use("/orders", ordersRouter);
 app.use("/users", usersRouter);
+app.use("/products", productsRouter);
 
 app.get("/", (req, res) => {
   res.json({ msg: "...get all request route working" });

@@ -44,8 +44,25 @@ model User{
 }
 
 model Order{
-  orderid Int @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   quantity Int
   userid  Int
+  description String
   user User @relation(fields: [userid], references: [id])
+  products  ProductsOnOrder[]
 }
+
+model Product{
+  id  Int @id @default(autoincrement())
+  name String @db.VarChar(200)
+  orders ProductsOnOrder[]
+}
+
+model ProductsOnOrder{
+ id  Int @id @default(autoincrement())
+ orderid Int
+ order Order @relation(fields: [orderid], references:[id])
+productid Int
+product Product @relation(fields: [productid], references:[id])
+}
+

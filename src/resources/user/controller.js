@@ -3,7 +3,7 @@ const dbClient = require("../../utils/dbClient");
 
 function createOneUser(req, res) {
   const newUser = req.body;
-  dbClient.users
+  dbClient.user
     .create({ data: newUser })
     .then((newUser) => {
       res.json({ newUser });
@@ -14,13 +14,13 @@ function createOneUser(req, res) {
 }
 
 function findAllUsers(req, res) {
-  dbClient.users.findMany().then((allUsers) => res.json({ allUsers }));
+  dbClient.user.findMany().then((allUsers) => res.json({ allUsers }));
 }
 
 function updateUser(req, res) {
   const updatedUser = req.body;
   const id = parseInt(req.params.id);
-  dbClient.users
+  dbClient.user
     .update({
       where: { id: id },
       data: updatedUser,
@@ -32,11 +32,20 @@ function updateUser(req, res) {
 
 function deleteUser(req, res) {
   const id = parseInt(req.params.id);
-  dbClient.users
+  dbClient.user
     .delete({
       where: { id: id },
     })
     .then((user) => res.json({ msg: `you deleted meeeee @ id no ${id}` }));
+}
+
+// >>> trying to get relationship working
+
+async function userOrdersList(req, res) {
+  const userOrders = await dbClient.user.findMany({
+    include: { orders: true },
+  });
+  res.json({ data: userOrders });
 }
 
 module.exports = {
@@ -44,4 +53,5 @@ module.exports = {
   findAllUsers,
   updateUser,
   deleteUser,
+  userOrdersList,
 };
